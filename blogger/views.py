@@ -43,8 +43,7 @@ def home(request):
 
 def detail(request, blog_pk):
     content = get_object_or_404(BlogPost, pk=blog_pk)
-    form = CreateBlogForm(instance=content)
-    return render(request, 'blogger/detail.html', {'content':content, 'form':form})
+    return render(request, 'blogger/detail.html', {'content':content})
 
 def createblog(request):
     if request.method == 'GET':
@@ -53,6 +52,7 @@ def createblog(request):
         form = CreateBlogForm(request.POST)
         if form.is_valid():
             blog = form.save(commit=False)
+            #the .blog_user in blog.bloguser should be the same name on the .models
             blog.blog_user = request.user
             blog.save()
             return redirect('home')
