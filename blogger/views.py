@@ -45,6 +45,16 @@ def detail(request, blog_pk):
     content = get_object_or_404(BlogPost, pk=blog_pk)
     return render(request, 'blogger/detail.html', {'content':content})
 
+
+    """
+    User View
+    """
+def homepage(request):
+    content = BlogPost.objects.filter(blog_user=request.user)
+    return render(request, 'blogger/home.html', {'content':content})    
+
+
+
 def createblog(request):
     if request.method == 'GET':
         return render(request, 'blogger/createblog.html', {'form':CreateBlogForm()})
@@ -52,9 +62,15 @@ def createblog(request):
         form = CreateBlogForm(request.POST)
         if form.is_valid():
             blog = form.save(commit=False)
-            #the .blog_user in blog.bloguser should be the same name on the .models
+            #the .blog_user in blog.blog_user should be the same name on the .models
             blog.blog_user = request.user
             blog.save()
             return redirect('home')
             
-        
+def editblog(request, blog_pk):
+    content = get_object_or_404(BlogPost, pk=blog_pk, blog_user=request.user)
+    if request.method == 'GET':
+        form = CreateBlogForm(instance=content)
+        return render(request, 'blogger/editblog.html', {'content':content, 'form':form})
+    else:
+        pass
