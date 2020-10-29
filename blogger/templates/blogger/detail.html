@@ -1,5 +1,8 @@
 {% extends 'blogger/base.html' %}
 
 {% block content %}
-{{ content.blog_title }}
+<h1>{{content.blog_title}}</h1></a>
+<h3>{{content.blog_user}}</h3>
+<h6>{{content.blog_publish}}</h6>
+<p>{{content.blog_content }}</p>
 {% endblock %}
