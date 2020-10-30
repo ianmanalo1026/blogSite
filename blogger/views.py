@@ -23,9 +23,10 @@ def signupuser(request):
         
 @login_required()
 def logoutuser(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
         logout(request)
-        return redirect('home')
+        return render(request, 'blogger/logoutuser.html')
+        
 
 def loginuser(request):
     if request.method == 'GET':
@@ -51,14 +52,18 @@ def detail(request, blog_pk):
     User View
     """
 @login_required()   
-def profile(request):
+def mypage(request):
     content = BlogPost.objects.filter(blog_user=request.user)
-    return render(request, 'blogger/profile.html', {'content':content})    
+    return render(request, 'blogger/mypage.html', {'content':content})    
 
 @login_required()
-def profiledetail(request,blog_pk):
+def viewblog(request,blog_pk):
     content = get_object_or_404(BlogPost, pk=blog_pk, blog_user=request.user)
-    return render(request, 'blogger/profiledetail.html', {'content':content})
+    return render(request, 'blogger/viewblog.html', {'content':content})
+
+def myprofile(request):
+    pass
+    
 
 @login_required()
 def createblog(request):
@@ -71,7 +76,7 @@ def createblog(request):
             #the .blog_user in blog.blog_user should be the same name on the .models
             blog.blog_user = request.user
             blog.save()
-            return redirect('profile')
+            return redirect('mypage')
         
 @login_required()          
 def editblog(request, blog_pk):
@@ -83,7 +88,7 @@ def editblog(request, blog_pk):
         try:
             form =  CreateBlogForm(request.POST, instance=content)
             form.save()
-            return redirect('profile')
+            return redirect('mypage')
         except ValueError:
             return render(request, 'blogger/editblog.html', {'content':content, 'form':form, 'error':'Please Try Again! '})
         
@@ -92,4 +97,4 @@ def deleteblog(request, blog_pk):
     content = get_object_or_404(BlogPost, pk=blog_pk, blog_user=request.user)
     if request.method == "POST":
         content.delete()
-        return redirect('profile')
+        return redirect('mypage')

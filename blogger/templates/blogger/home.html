@@ -1,13 +1,22 @@
+<!DOCTYPE html>
 {% extends 'blogger/base.html' %}
-
-{% block content %}
-<div class="container">
-{% for home in content %}
-{% csrf_token %}
-<a href="{% url 'detail' home.id %}"><h1>{{home.blog_title}}</h1></a>
-<h3>{{home.blog_user}}</h3>
-<h6>{{ home.blog_publish}}</h6>
-<p>{{home.blog_content|truncatechars:255}}</p>
-{% endfor %}
-</div>
-{% endblock %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+        <div class="container">
+            {% for home in content %}
+            {% csrf_token %}
+                <a href="{% url 'detail' home.id %}"><h1>{{home.blog_title}}</h1></a>
+                <h3>{{home.blog_user}}</h3>
+                <h6>{{ home.blog_publish}}</h6>
+            <p>{{home.blog_content|truncatechars:255}}</p>
+            {% endfor %}
+        </div>
+    {% endblock %}
+</body>
+</html>

@@ -4,7 +4,7 @@
 <div class="container">
 {% for profile in content %}
 {% csrf_token %}
-<a href="{% url 'profiledetail' profile.id %}"><h1>{{profile.blog_title}}</h1></a>
+<a href="{% url 'viewblog' profile.id %}"><h1>{{profile.blog_title}}</h1></a>
 <h3>{{profile.blog_user}}</h3>
 <h6>{{ profile.blog_publish}}</h6>
 <p>{{profile.blog_content|truncatechars:255 }}</p>

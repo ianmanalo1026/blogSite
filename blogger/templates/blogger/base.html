@@ -16,11 +16,13 @@
             <a class="nav-link" href="{% url 'home' %}">Home<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            <a class="nav-link" href="{% url 'mypage' %}">My Page</a>
           </li>
+          {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{% url 'myprofile' %}">My profile</a>
           </li>
+          {% endif %}
           {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'createblog' %}">Create Blog</a>
@@ -28,13 +30,13 @@
           {% endif %}
       </ul>
       <ul class="nav justify-content-end">
-        {% if user.is_authenticated%}
-        <li class="nav-item navbar-dark bg-dark">
-          <form method="POST" action="{% url 'logoutuser' %}">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-          </form>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Announcement</a>
         </li>
+        {% if user.is_authenticated%}
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'logoutuser' %}">Logout</a>
+          </li>
         {% else %}
         <li class="nav-item navbar-dark bg-dark">
           <a class="nav-link active" href="{% url 'signupuser' %}">Sign up</a>

@@ -9,9 +9,10 @@ urlpatterns = [
     path('logoutuser/', views.logoutuser, name='logoutuser'),
     path('loginuser/', views.loginuser, name='loginuser'),
     
-    path('profile/',views.profile, name='profile'),
-    path('profile/createblog/', views.createblog, name='createblog'),
-    path('profile/<int:blog_pk>/', views.profiledetail, name='profiledetail'),
-    path('profile/<int:blog_pk>/editblog/', views.editblog, name='editblog'),
-    path('profile/<int:blog_pk>/deleteblog/', views.deleteblog, name='deleteblog'),
+    path('mypage/',views.mypage, name='mypage'),
+    path('mypage/myprofile/', views.myprofile, name='myprofile'),
+    path('mypage/createblog/', views.createblog, name='createblog'),
+    path('mypage/<int:blog_pk>/', views.viewblog, name='viewblog'),
+    path('mypage/<int:blog_pk>/editblog/', views.editblog, name='editblog'),
+    path('mypage/<int:blog_pk>/deleteblog/', views.deleteblog, name='deleteblog'),
 ]
