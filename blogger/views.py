@@ -4,23 +4,22 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .models import BlogPost
-from .forms import CreateBlogForm
+from .forms import CreateBlogForm, UserRegisterForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def signupuser(request):
-    if request.method == 'GET':
-        return render(request, 'blogger/signupuser.html', {'form':UserCreationForm()})
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account has been created for[username]!')
+            return redirect('home')   
     else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
-                user.save()
-                login(request, user)
-                return redirect('home')
-            except IntegrityError:
-                return render(request, 'blogger/signupuser.html', {'form':UserCreationForm(), 'error':'Username has been taken!'})
-        else:
-            return render(request, 'blogger/signupuser.html', {'form':UserCreationForm(), 'error':'Password did not match!'})
+        form = UserRegisterForm()
+    return render(request, 'blogger/signupuser.html', {'form':form}) 
+        
         
 @login_required()
 def logoutuser(request):

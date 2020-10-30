@@ -28,9 +28,6 @@
           {% endif %}
       </ul>
       <ul class="nav justify-content-end">
-        <li class="nav-item navbar-dark bg-dark">
-          <a class="nav-link active" href="{% url 'signupuser' %}">Sign up</a>
-        </li>
         {% if user.is_authenticated%}
         <li class="nav-item navbar-dark bg-dark">
           <form method="POST" action="{% url 'logoutuser' %}">
@@ -39,6 +36,9 @@
           </form>
         </li>
         {% else %}
+        <li class="nav-item navbar-dark bg-dark">
+          <a class="nav-link active" href="{% url 'signupuser' %}">Sign up</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link active" href="{% url 'loginuser' %}">Login</a>
         </li>
