@@ -2,7 +2,6 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from django.db import IntegrityError
 from .models import BlogPost
 from .forms import CreateBlogForm, UserRegisterForm
 from django.contrib.auth.decorators import login_required
@@ -14,7 +13,7 @@ def signupuser(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Account has been created for[username]!')
+            messages.success(request, f'Account has been created for [username]!')
             return redirect('home')   
     else:
         form = UserRegisterForm()

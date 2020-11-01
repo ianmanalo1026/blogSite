@@ -1,3 +1,4 @@
+from django.db.models.fields.related import OneToOneField
 from blogger.models import BlogPost
 from django.forms import ModelForm
 from django import forms

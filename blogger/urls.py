@@ -16,3 +16,4 @@ urlpatterns = [
     path('mypage/<int:blog_pk>/editblog/', views.editblog, name='editblog'),
     path('mypage/<int:blog_pk>/deleteblog/', views.deleteblog, name='deleteblog'),
 ]
+
