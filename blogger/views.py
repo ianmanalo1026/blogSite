@@ -60,10 +60,9 @@ def viewblog(request,blog_pk):
     content = get_object_or_404(BlogPost, pk=blog_pk, blog_user=request.user)
     return render(request, 'blogger/viewblog.html', {'content':content})
 
-@login_required()
+
 def my_profile(request):
-    
-    context = 
+
     return render(request, 'blogger/my_profile.html')
 
 @login_required()

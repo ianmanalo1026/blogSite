@@ -13,9 +13,8 @@ class BlogPost(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=1000)
-    picture = models.ImageField(upload_to='media/')
+    picture = models.ImageField(default='default.jpg' ,upload_to='media/', blank=True)
     
     def __str__(self):
         return self.user.first_name
 
-    
