@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from .models import BlogPost
-from .forms import CreateBlogForm, UserRegisterForm
+from .forms import CreateBlogForm, UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -60,8 +60,28 @@ def viewblog(request,blog_pk):
     content = get_object_or_404(BlogPost, pk=blog_pk, blog_user=request.user)
     return render(request, 'blogger/viewblog.html', {'content':content})
 
-def myprofile(request):
-    pass
+@login_required()
+def my_profile(request):
+    
+    context = 
+    return render(request, 'blogger/my_profile.html')
+
+@login_required()
+def my_profile_update(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST,instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return redirect('my_profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+        context = {'u_update':u_form, 'p_update':p_form}
+        
+    return render(request, 'blogger/my_profile_update', context)
+    
     
 
 @login_required()
