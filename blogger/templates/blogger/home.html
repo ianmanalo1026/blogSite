@@ -12,9 +12,9 @@
             {% for home in content %}
             {% csrf_token %}
                 <a href="{% url 'detail' home.id %}"><h1>{{home.blog_title}}</h1></a>
-                <h3>{{home.blog_user}}</h3>
+                <h3>{{home.blog_user.first_name}}</h3>
                 <h6>{{ home.blog_publish}}</h6>
-            <p>{{home.blog_content|truncatechars:255}}</p>
+                <p>{{home.blog_content|truncatechars:255}}</p>
             {% endfor %}
         </div>
     {% endblock %}
