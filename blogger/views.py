@@ -7,6 +7,7 @@ from .forms import CreateBlogForm, UserRegisterForm, UserUpdateForm, ProfileUpda
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+
 def signupuser(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -38,9 +39,11 @@ def loginuser(request):
             login(request, user)
             return redirect('home')
 
+
 def home(request):
     content = BlogPost.objects.all()
     return render(request, 'blogger/home.html', {'content':content})
+
 
 def detail(request, blog_pk):
     content = get_object_or_404(BlogPost, pk=blog_pk)
@@ -55,6 +58,7 @@ def mypage(request):
     content = BlogPost.objects.filter(blog_user=request.user)
     return render(request, 'blogger/mypage.html', {'content':content})    
 
+
 @login_required()
 def viewblog(request,blog_pk):
     content = get_object_or_404(BlogPost, pk=blog_pk, blog_user=request.user)
@@ -62,7 +66,6 @@ def viewblog(request,blog_pk):
 
 
 def my_profile(request):
-
     return render(request, 'blogger/my_profile.html')
 
 @login_required()
@@ -82,7 +85,6 @@ def my_profile_update(request):
     return render(request, 'blogger/my_profile_update', context)
     
     
-
 @login_required()
 def createblog(request):
     if request.method == 'GET':
@@ -95,6 +97,7 @@ def createblog(request):
             blog.blog_user = request.user
             blog.save()
             return redirect('mypage')
+        
         
 @login_required()          
 def editblog(request, blog_pk):
@@ -109,6 +112,7 @@ def editblog(request, blog_pk):
             return redirect('mypage')
         except ValueError:
             return render(request, 'blogger/editblog.html', {'content':content, 'form':form, 'error':'Please Try Again! '})
+        
         
 @login_required()       
 def deleteblog(request, blog_pk):
